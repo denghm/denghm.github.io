@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: 星际移民的故事
+title: 信息，在于你从多大的不确定性中做出了选择
 ---
 
 
@@ -9,9 +9,9 @@ title: 星际移民的故事
 
 
 {% if site.categories.thinking.size %}
-共有 {{ site.categories.thinking.size }} 篇故事类文章
+共有 {{ site.categories.thinking.size }} 篇感悟类文章
 		{% else %}
-暂无故事类文章
+暂无感悟类文章
 		{% endif %}
 
 <div class="tiles">

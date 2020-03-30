@@ -36,7 +36,7 @@ title:
 
 <a href="./technology/">查看所有技术（共 {{ site.categories.technology.size }} 篇）</a>
 
-## 近期故事
+## 近期感悟
 
 <div class="tiles">
 
@@ -49,13 +49,13 @@ title:
 
 
 	{% if site.categories.thinking.size %}
-<a href="./thinking/">查看所有故事（共 {{ site.categories.thinking.size }} 篇）</a>
+<a href="./thinking/">查看所有感悟（共 {{ site.categories.thinking.size }} 篇）</a>
 		{% else %}
-暂无故事类文章
+暂无感悟类文章
 		{% endif %}
 
 
-## 近期历史
+## 近期人生
 
 <div class="tiles">
 {% for post in site.categories.history limit:5 %}
@@ -66,8 +66,8 @@ title:
 
 
 {% if site.categories.history.size %}
-<a href="./history/">查看所有故事（共 {{ site.categories.history.size }} 篇）</a>
+<a href="./history/">查看所有人生（共 {{ site.categories.history.size }} 篇）</a>
 		{% else %}
-暂无历史类文章
+暂无人生类文章
 		{% endif %}
 

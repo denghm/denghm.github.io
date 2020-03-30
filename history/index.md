@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: 星际移民的科学
+title: 我们看到的不是事物本身，我们是从这些事物上看到了自己
 ---
 
 
@@ -9,9 +9,9 @@ title: 星际移民的科学
 
 
 {% if site.categories.history.size %}
-共有 {{ site.categories.history.size }} 篇历史类文章
+共有 {{ site.categories.history.size }} 篇人生类文章
 		{% else %}
-暂无历史类文章
+暂无人生类文章
 		{% endif %}
 
 <div class="tiles">
