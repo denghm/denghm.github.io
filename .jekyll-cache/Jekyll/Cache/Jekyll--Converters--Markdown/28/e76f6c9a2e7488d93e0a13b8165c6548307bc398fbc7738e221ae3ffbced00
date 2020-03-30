@@ -1,0 +1,55 @@
+I"@<div class="front-cover" style="background:url(./images/front-cover.jpg) no-repeat fixed center;background-size:cover;overflow:hidden;">
+    
+    <section>
+        <div class="container" style="padding-top:1em;">
+            <h1 style="text-align:center;color:#fff;font-weight:600;" id="site-title-front">尘世俗事</h1>
+            <h3 style="text-align:center;color:#fff;font-weight:600;font-size:90%;">关于个人的生活，工作，学习，思考</h3>
+        </div>
+<div class="featured" style="border-top:1px solid grey;margin:0 10% 0 10%;">
+<div style="background-image:linear-gradient(-130deg, rgba(14,21,58,0.3) 10%, rgba(74,76,123,0.5) 35%, rgba(161,140,171,0.2) 65%, rgba(243,201,215,0.2) 90%);">
+
+<h3 style="text-align:center;font-size:120%;">最新文章：<a href="http://localhost:4000/technology/linux-extend-partion/" style="text-align:center;color:white;font-weight:600;">Linux下扩展磁盘分区容量</a></h3>
+<p style="text-align:left;color:#fff;font-size:90%;padding-bottom:0.5em;padding-left:2%;padding-right:2%;">Linux经常会遇到磁盘空间不足的问题，庆幸的是，新一代的文件系统提供了可以扩展空间的能力。</p>
+
+</div>
+</div>
+    </section>
+
+</div>
+
+<h2 id="近期技术文章">近期技术文章</h2>
+
+<div class="tiles">
+
+	<li><span>2020 年 03 月 29 日</span> &raquo; <a href="http://localhost:4000/technology/linux-extend-partion/">Linux下扩展磁盘分区容量</a></li>
+
+	<li><span>2014 年 10 月 16 日</span> &raquo; <a href="http://localhost:4000/technology/mars-north/">在火星上如何通过星空辨别方向</a></li>
+
+</div>
+<!-- /.tiles -->
+
+<p><a href="./technology/">查看所有技术（共 2 篇）</a></p>
+
+<h2 id="近期故事">近期故事</h2>
+
+<div class="tiles">
+
+
+	<li><span>2014 年 10 月 18 日</span> &raquo; <a href="http://localhost:4000/thinking/martian-sunset-phobos/">火星的日落</a></li>
+
+
+</div>
+<!-- /.tiles -->
+
+<p><a href="./thinking/">查看所有故事（共 1 篇）</a></p>
+
+<h2 id="近期历史">近期历史</h2>
+
+<div class="tiles">
+
+</div>
+<!-- /.tiles -->
+
+<p>暂无历史类文章</p>
+
+:ET

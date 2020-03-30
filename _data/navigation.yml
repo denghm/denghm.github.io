@@ -1,6 +1,27 @@
 # Site navigation links
 
-- title:
-  url:
-  excerpt:
-  image:
+- title: 技术
+  url: /technology/
+  excerpt: "星际移民的科学"
+
+
+- title: 感悟
+  url: /thinking/
+  excerpt: "星际移民的故事"
+
+
+- title: 人生
+  url: /history/
+  excerpt: "星际移民的历史"
+
+
+- title: TIL
+  url: /til/
+  excerpt: "每日新知"  
+
+- title: 关于
+  url: /about/
+  excerpt: "关于页面示例"
+
+
+
