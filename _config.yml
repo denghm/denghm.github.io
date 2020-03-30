@@ -17,7 +17,7 @@ sass:
     style: compressed
 permalink: /:categories/:title/
 markdown: kramdown # 我选了 kramdown，与默认的 Markdown 稍有不同，但是支持更多的语法。请参阅 kramdown 官方语法
-highlighter: pygments
+highlighter: Rouge
 gems:
   - jekyll-sitemap
 
