@@ -4,4 +4,4 @@ title: "关于"
 share: false
 ---
 
-《{{site.title}}》是一个基于 skinny bones 修改来的 jekyll 主题。
+{{site.title}}，一个程序员的个人空间。
