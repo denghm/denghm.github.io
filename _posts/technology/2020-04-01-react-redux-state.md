@@ -84,13 +84,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(Registry);
 
 容易引起混淆的地方来了
 
-### React组件自身的state与全局状态
+### React组件自身的state与全局state
 
 因为react组件往往有表单组件，这时为了绑定表单的输入，需要有内部定义的state, 比如shouldComponentUpdate的第二个参数是react组件的state。为什么，是用的state字段名进行选取的吗？目前还没有分析清楚
 
 ```javascript
 shouldComponentUpdate(nextProps, nextState)
 ```
+
+
+
+需要与用户交互的控件，比如Input表单，状态用内部的state做绑定；
+
+不需要与用户交互的状态，比如列表，状态与全局的state做绑定
 
 
 
@@ -106,3 +112,37 @@ React组件的constructor只在类初始化时调用一次，这里无法获取�
 
 所以必须找一个react生命周期函数，把全局状态设置到React自身状态state上，然后React组件刷新时才可以自身的state来刷新显示
 
+因为render()函数渲染界面从一个地方获取数据，第一次界面初始化时，从state获取；第二次从store加载到数据后，再进行渲染，需要把store数据设置到state中
+
+而且对数据变化进行记录，但store数据不能更新，所以在通过界面操作数据时，比如翻页，这涉及当前页等动态变化的，只能把store数据放入React组件的进行操作
+
+在render()渲染前调用props -> state的映射，目前没有合适的生命周期函数
+
+1. mapStateToProps() 
+
+   可以通过函数把store映射为props, 但无法把props映射为内部state
+
+2. shouldComponentUpdate()
+
+   在props全局数据变化或state局部数据变化时都得到调用，而最好是只有props全局数据变化时调用，故只有自己注册一个store的监听函数
+
+
+
+
+
+
+
+
+# React-Redux框架
+
+## 基本元素
+
+* 静态界面与状态组成应用
+
+* 全局状态
+
+* 组件交互
+  * 状态传递
+  * 事件传递
+  * 人机交互
+* 刷新
