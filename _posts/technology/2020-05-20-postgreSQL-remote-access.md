@@ -5,8 +5,8 @@ modified: 2020-05-13
 author: Voyager
 toc: false
 comments: true
-categories: thinking
-summary: postgreSQL允许远程接入
+categories: technology
+summary: 配置postgreSQL支持远程接入
 ---
 ## 环境
 Centos  7

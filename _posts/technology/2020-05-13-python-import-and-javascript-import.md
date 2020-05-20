@@ -5,7 +5,7 @@ modified: 2020-05-13
 author: Voyager
 toc: false
 comments: true
-categories: thinking
+categories: technology
 summary: 比较不同的importd的区别
 ---
 
