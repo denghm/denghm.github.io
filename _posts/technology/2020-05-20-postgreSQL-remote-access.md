@@ -19,12 +19,12 @@ postgreSQL 12
 ## 步骤
 1. 修改postgresql.conf
 修改两处，一处是打开在所有地址上的侦听端口
-```
+```ini
 listen_addresses = '*'                  
 port = 5432   
 ```
 修改密码的存储方式
-```
+```ini
 password_encryption = md5               # md5 or scram-sha-256
 ```
 2. 修改pg_hba.conf
@@ -44,7 +44,7 @@ systemctl restart postgresql-12
 
 
 3. 打开防火墙
-```
+```shell
 firewall-cmd --zone=public --add-port=5432/tcp --permanent
 ```
 
@@ -52,7 +52,7 @@ firewall-cmd --zone=public --add-port=5432/tcp --permanent
 安装时已经创建用户postgres, 密码未知，需要修改密码
 centos root用户切换到postgres用户（因为该用户未设置密码，故不能直接登录)，执行psql
 默认采用的是pg_hba.conf中的local方式登录，所以不需要用户名和密码
-```
+```sql
 alter user postgres with password 'pg202005';
 ```
 注意
@@ -61,7 +61,7 @@ alter user postgres with password 'pg202005';
 
 
 此时用户就可以在任何一台机器上远程访问
-```
+```shell
 psql -h 127.0.0.1 -d postgres -U postgres
 ```
 
