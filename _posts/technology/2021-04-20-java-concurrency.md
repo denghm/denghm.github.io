@@ -70,20 +70,32 @@ ObjectMonitor中有两个队列\_WaitSet和\_EntryList,用来保存ObjectWaiter�
 |Thread| \_EntryList | \_Owner | \_count | \_WaitSet |
 |----------|------|---------|---------|---------------|
 |ThreadA|ThreadA|ThreadA|+1||
-|ThreadA.wait()||null|-1|ThreadA|
+|wait()||null|-1|ThreadA|
+|notifyAll()|||||
+
+### synchronized锁的类型
+synchronized依赖于操作系统的Mutex Lock来实现，但操作系统的锁切换线程需要从用户态切换到内核态，成本较高，jdk1.6后引入
+
+
+
+
+
 
 ## 死锁及其解决方案
 ### 死锁的形成条件
 要形成死锁，必须满足下面的4个条件
 1. 互斥
-2. 占有且等待
-3. 不可抢占
-4. 循环等待
-破坏其中一个，就可以避免死锁的发生。
 
-1. 破坏“占有且等待”，可以一次申请所有资源；
-2. 破坏”不可抢占“，占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源；
-3. 破坏"循环等待”，可以按序申请资源。
+2. 占有且等待
+
+3. 不可抢占
+
+4. 循环等待
+
+破坏其中一个，就可以避免死锁的发生。
+* 破坏“占有且等待”，可以一次申请所有资源；
+* 破坏”不可抢占“，占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源；
+* 破坏"循环等待”，可以按序申请资源。
 
 ### 占用且等待的破坏方案
 #### 死循环来等待释放锁
@@ -111,16 +123,84 @@ ObjectMonitor中有两个队列\_WaitSet和\_EntryList,用来保存ObjectWaiter�
 ## 管程
 ### 管程
 管程，指的是管理共享变量以及对共享变量的操作过程，让它们支持并发。管程支持两类并发领域的经典问题：互斥和并发。
-
 互斥帮助线程避免彼此干扰，并发帮助线程共同完成同一任务。
 
 
 
 ### MESA模型
 
+## 线程
+### 通用的线程生命周期
+
+```mermaid
+stateDiagram-v2
+    initial: 初始状态
+    runnable: 可运行状态
+    running: 运行状态
+    terminated: 终止状态
+    sleep: 休眠状态
+    initial --> runnable: 创建操作系统线程
+    runnable --> running: 分配CPU
+    running --> terminated: 运行完
+    running --> sleep: 调用阻塞API/等待事件
+    sleep --> running: 事件唤醒
+```
+### Java线程生命周期
+
+```mermaid
+stateDiagram-v2
+    new: 初始状态
+    runnable: 可运行/运行状态
+    blocked: 阻塞状态
+    waiting: 无时限等待
+    timed_waiting: 有时限等待
+    terminated: 终止状态
+    new --> runnable: thread.start()
+    runnable --> terminated: stop()/interrupt() 
+    runnable --> blocked: 等待synchronized隐式锁
+    blocked --> runnable: 获得synchronized隐式锁
+    runnable --> waiting: Object.wait()/Thread.join()/LockSupport.park()
+    waiting --> runnable: LockSupport.unpark(Thread thread)
+    runnable --> timed_waiting: Thread.sleep(long millis)/Object.wait(long timeout)/Thread.join(long millis)
+```
+#### stop() 和 interrupt() 方法的主要区别
+1. stop()
+杀死线程，并且线程持有的ReentrantLock不会释放
+2. interrupt()
+* 如果线程处于waiting/timed_waiting状态，会恢复为runable状态，抛出interruptedException;
+* 如果线程处于runnable状态
+  * 可以通过 isInterrupted() 方法，检测是不是自己被中断了；
+  *  阻塞在 java.nio.channels.InterruptibleChannel上，抛出java.nio.channels.ClosedByInterruptException
+  *  阻塞在 java.nio.channels.Selector上，java.nio.channels.Selector 会立即返回
 
 
 
+### 最佳线程数量
+#### CPU 密集型计算场景
+理论上“线程的数量 =CPU 核数”就是最合适的。在工程上，线程的数量一般会设置为“CPU 核数 +1”
+#### IO密集型计算场景
+* 对单核CPU
+最佳线程数 =1 +（I/O 耗时 / CPU 耗时）
+* 多核 CPU
+最佳线程数 =CPU 核数 * [1 +(I/O 耗时 / CPU 耗时)]
+
+### 局部变量线程安全
+每个线程都有自己独立的调用栈，局部变量保存在调用栈中
+称为**线程封闭**
+
+## 并发策略
+1. 封装共享变量
+将共享变量作为对象属性封装在内部，对所有公共方法制定并发访问策略
+2. 识别共享变量间的约束条件
+3. 制定并发访问策略
+1) 避免共享
+2) 不变模式
+3) 管程及其它同步工具
+
+### 原则
+1. 优先使用成熟的工具类
+2. 迫不得已时才使用低级的同步原语：低级的同步原语主要指的是 synchronized、Lock、Semaphore
+3. 避免过早优化，安全第一
 
 
 
