@@ -88,84 +88,39 @@ ObjectMonitor中有两个队列\_WaitSet和\_EntryList,用来保存ObjectWaiter�
 ### 占用且等待的破坏方案
 #### 死循环来等待释放锁
 #### 等待-通知机制
+![等待-通知机制](https://raw.githubusercontent.com/denghm/denghm.github.io/master/images/technology/thread-wait-notify.png "等待-通知机制")
+
+## 并发编程的问题
+### 安全性
+本质上就是正确性，就是程序按照我们期望的执行，不要让我们感到意外。
+数据竞争，存在共享数据，多个线程读取同一份数据
+竞态条件, 程序执行的结果依赖程序执行的顺序
+### 活跃性
+#### 活锁
+#### 解决办法
+需要在谦让时，等待一个随机的时间
+
+### 性能
+#### 阿姆达尔（Amdahl）定律
+#### 解决办法
+#### 度量指标
+吞吐量: 单位时间内处理的请求数量
+延迟: 发出请求到收到响应的时间
+并发量： 同时处理的请求数量
+
+## 管程
+### 管程
+管程，指的是管理共享变量以及对共享变量的操作过程，让它们支持并发。管程支持两类并发领域的经典问题：互斥和并发。
+
+互斥帮助线程避免彼此干扰，并发帮助线程共同完成同一任务。
 
 
 
-## 实现机制
-分为voting, commit两个阶段
+### MESA模型
 
-```mermaid
-sequenceDiagram
-Title: 二阶段提交
 
-participant Coordinator as 事务管理器
-participant CohortA as 资源管理器A
-participant CohortB as 资源管理器B
 
-Coordinator->>CohortA: CanCommit
-CohortA->>Coordinator: Yes
-Coordinator->>CohortB: CanCommit
-CohortB->>Coordinator: No
 
-Coordinator->>CohortA: DoAbort
-CohortA->>Coordinator: HaveCommitted
-Coordinator->>CohortB: DoAbort
-CohortB->>Coordinator: HaveCommitted
-```
-
-## 特性
-### 单点故障
-事务管理器发生故障
-
-### 数据不一致
-DoCommit时发生局部网络故障，接收到的参与者提交请求并执行提交操作，未接到提交请求的参与者则无法执行事务提交。
-
-# 三阶段提交
-## 参与者
-事务管理器，资源管理器
-
-## 实现机制
-分为CanCommit、PreCommit、DoCommit三个阶段
-
-```mermaid
-sequenceDiagram
-Title: 三阶段提交-正常流程
-
-participant Coordinator as 事务管理器
-participant CohortA as 资源管理器A
-participant CohortB as 资源管理器B
-
-Coordinator->>CohortA: CanCommit
-CohortA->>Coordinator: Yes
-Coordinator->>CohortB: CanCommit
-CohortB->>Coordinator: Yes
-
-Coordinator->>CohortA: PreCommit
-CohortA-->>CohortA: 记录Undo和Redo信息到事务日志
-CohortA->>Coordinator: ACK
-Coordinator->>CohortB: PreCommit
-CohortB-->>CohortB: 记录Undo和Redo信息到事务日志
-CohortB->>Coordinator: ACK
-
-Coordinator->>CohortA: DoCommit
-CohortA->>Coordinator: ACK
-Coordinator->>CohortB: DoCommit
-CohortB->>Coordinator: ACK
-```
-
-## 特性
-### 相比二阶段提交减少单点故障造成的系统阻塞
-当参与者在预提交阶段向协调者发送 Ack 消息后，如果长时间没有得到协调者的响应，在默认情况下，参与者会自动将超时的事务进行提交，从而减少整个集群的阻塞时间
-
-### 相比二阶段提交减少数据不一致
-DoCommit时发生局部网络故障，参与者会自动将超时的事务进行提交，数据一致
-
-# 基于分布式消息的最终一致性
-## 参与者
-消息中间件，资源管理器
-
-## 特性
-消息中间件会确认各系统的操作结果，若数据一致，则更新消息；若不一致，则回滚操作、删除消息。
 
 
 
